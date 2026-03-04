@@ -126,16 +126,9 @@ serial = [{ instance = "UART0", tx_pin = "GPIO43", rx_pin = "GPIO44" }]
 
 [split.central.matrix]
 #output colunas
-input_pins = ["GPIO1", "GPIO2", "GPIO3", "GPIO4", "GPIO5", "GPIO6"]
-output_pins = [
-    "GPIO13",
-    "GPIO12",
-    "GPIO11",
-    "GPIO10",
-    "GPIO9",
-    "GPIO8",
-    "GPIO7",
-]
+matrix_type = "normal"
+row_pins = ["GPIO1", "GPIO2", "GPIO3", "GPIO4", "GPIO5", "GPIO6"]
+col_pins = ["GPIO13", "GPIO12", "GPIO11", "GPIO10", "GPIO9", "GPIO8", "GPIO7"]
 
 [[split.peripheral]]
 rows = 6
@@ -145,13 +138,6 @@ col_offset = 7
 serial = [{ instance = "UART0", tx_pin = "GPIO43", rx_pin = "GPIO44" }]
 
 [split.peripheral.matrix]
-input_pins = ["GPIO1", "GPIO2", "GPIO3", "GPIO4", "GPIO5", "GPIO6"]
-output_pins = [
-    "GPIO13",
-    "GPIO12",
-    "GPIO11",
-    "GPIO10",
-    "GPIO9",
-    "GPIO8",
-    "GPIO7",
-]
+matrix_type = "normal"
+row_pins = ["GPIO1", "GPIO2", "GPIO3", "GPIO4", "GPIO5", "GPIO6"]
+col_pins = ["GPIO13", "GPIO12", "GPIO11", "GPIO10", "GPIO9", "GPIO8", "GPIO7"]
