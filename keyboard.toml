@@ -1,35 +1,152 @@
-# Documentation: https://rmk.rs/docs/configuration.html
 [keyboard]
-name = "RMK Keyboard"
-product_name = "RMK Keyboard"
-vendor_id = 0x4c4b
-product_id = 0x4643
-manufacturer = "RMK"
-chip = "rp2040"
+name = "Dactuiyl"
+product_name = "Dactuiyl"
+vendor_id = 0xFEED
+product_id = 0xCAD1
+manufacturer = "Artur Bacilla"
+serial_number = "vial:f64c2b3c"
+chip = "esp32s3"
 
-[matrix]
-# Row and col pins are mandatory
-row_pins = ["PIN_6", "PIN_7", "PIN_8", "PIN_9"]
-col_pins = ["PIN_19", "PIN_20", "PIN_21"]
-
-# RMK uses col2row as the default matrix diode direction, if you want to use a row2col matrix, add `row2col = true`
-# row2col = true
 
 [layout]
-rows = 4
-cols = 3
-layers = 2
+# WARNING: Currently row2col/col2row is set in RMK's feature gate, configs here do nothing actually
+# row2col = true
+rows = 6
+cols = 14
+layers = 1
+
 keymap = [
     [
-        ["A", "B", "C"],
-        ["Kc1", "Kc2", "Kc3"],
-        ["LCtrl", "MO(1)", "LShift"],
-        ["OSL(1)", "LT(2, Kc9)", "LM(1, LShift | LGui)"]
-    ],
-    [
-        ["_", "TT(1)", "TG(2)"],
-        ["_", "_", "_"],
-        ["_", "_", "_"],
-        ["_", "_", "_"]
+        [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5",
+            "F6",
+            "LCtrl",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+        ],
+        [
+            "",
+            "",
+            "Kc1",
+            "Kc2",
+            "Kc3",
+            "Kc4",
+            "LAlt",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+        ],
+        [
+            "",
+            "",
+            "Q",
+            "W",
+            "F",
+            "P",
+            "Space",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+        ],
+        [
+            "",
+            "",
+            "A",
+            "R",
+            "S",
+            "T",
+            "lwin",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+        ],
+        [
+            "",
+            "",
+            "Z",
+            "X",
+            "C",
+            "D",
+            "MO(2)",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+        ],
+        [
+            "",
+            "",
+            "LGui",
+            "LShift",
+            "Delete",
+            "MO(6)",
+            "TRNS",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+        ],
     ],
 ]
+
+[light]
+
+[storage]
+
+# !!! Warning: RMK uses last 2 sectors of your microcontroller's flash by default. You have to ensure that those flash space is not used.
+# If you're using a bootloader which puts itself at the end of the flast, like Adafruit_nRF52_Bootloader, RMK will break the bootloader.
+# Setting the `start_addr` manually to avoid this. See: https://haobogu.github.io/rmk/storage.html
+
+
+[split]
+connection = "serial"
+
+[split.central]
+rows = 6
+cols = 7
+row_offset = 0
+col_offset = 0
+serial = [{ instance = "UART0", tx_pin = "GPIO43", rx_pin = "GPIO44" }]
+
+[split.central.matrix]
+#output colunas
+input_pins = ["GPIO1", "GPIO2", "GPIO3", "GPIO4", "GPIO5", "GPIO6"]
+output_pins = ["GPIO13", "GPIO12", "GPI11", "GPI10", "GPIO9", "GPIO8", "GPIO7"]
+
+[[split.peripheral]]
+rows = 6
+cols = 7
+row_offset = 0
+col_offset = 7
+serial = [{ instance = "UART0", tx_pin = "GPIO43", rx_pin = "GPIO44" }]
+
+[split.peripheral.matrix]
+input_pins = ["GPIO1", "GPIO2", "GPIO3", "GPIO4", "GPIO5", "GPIO6"]
+output_pins = ["GPIO13", "GPIO12", "GPI11", "GPI10", "GPIO9", "GPIO8", "GPIO7"]
