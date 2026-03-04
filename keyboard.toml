@@ -9,8 +9,6 @@ chip = "esp32s3"
 
 
 [layout]
-# WARNING: Currently row2col/col2row is set in RMK's feature gate, configs here do nothing actually
-# row2col = true
 rows = 6
 cols = 14
 layers = 1
@@ -116,15 +114,6 @@ keymap = [
     ],
 ]
 
-[light]
-
-[storage]
-
-# !!! Warning: RMK uses last 2 sectors of your microcontroller's flash by default. You have to ensure that those flash space is not used.
-# If you're using a bootloader which puts itself at the end of the flast, like Adafruit_nRF52_Bootloader, RMK will break the bootloader.
-# Setting the `start_addr` manually to avoid this. See: https://haobogu.github.io/rmk/storage.html
-
-
 [split]
 connection = "serial"
 
@@ -138,7 +127,15 @@ serial = [{ instance = "UART0", tx_pin = "GPIO43", rx_pin = "GPIO44" }]
 [split.central.matrix]
 #output colunas
 input_pins = ["GPIO1", "GPIO2", "GPIO3", "GPIO4", "GPIO5", "GPIO6"]
-output_pins = ["GPIO13", "GPIO12", "GPI11", "GPI10", "GPIO9", "GPIO8", "GPIO7"]
+output_pins = [
+    "GPIO13",
+    "GPIO12",
+    "GPIO11",
+    "GPIO10",
+    "GPIO9",
+    "GPIO8",
+    "GPIO7",
+]
 
 [[split.peripheral]]
 rows = 6
@@ -149,4 +146,12 @@ serial = [{ instance = "UART0", tx_pin = "GPIO43", rx_pin = "GPIO44" }]
 
 [split.peripheral.matrix]
 input_pins = ["GPIO1", "GPIO2", "GPIO3", "GPIO4", "GPIO5", "GPIO6"]
-output_pins = ["GPIO13", "GPIO12", "GPI11", "GPI10", "GPIO9", "GPIO8", "GPIO7"]
+output_pins = [
+    "GPIO13",
+    "GPIO12",
+    "GPIO11",
+    "GPIO10",
+    "GPIO9",
+    "GPIO8",
+    "GPIO7",
+]
