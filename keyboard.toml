@@ -16,6 +16,7 @@ layers = 1
 keymap = [
     [
         [
+            # Left Side
             "F1",
             "F2",
             "F3",
@@ -23,6 +24,7 @@ keymap = [
             "F5",
             "F6",
             "LCtrl",
+            # Right Side
             "__",
             "__",
             "__",
@@ -32,13 +34,15 @@ keymap = [
             "__",
         ],
         [
-            "",
-            "",
+            # Left Side
+            "LeftBracket",
+            "RightBracket",
             "Kc1",
             "Kc2",
             "Kc3",
             "Kc4",
             "LAlt",
+            # Right Side
             "__",
             "__",
             "__",
@@ -48,13 +52,15 @@ keymap = [
             "__",
         ],
         [
-            "",
-            "",
+            # Left Side
+            "__",
+            "__",
             "Q",
             "W",
             "F",
             "P",
-            "Space",
+            "Tab",
+            # Right Side
             "__",
             "__",
             "__",
@@ -64,13 +70,15 @@ keymap = [
             "__",
         ],
         [
-            "",
-            "",
+            # Left Side
+            "Backslash",
+            "Slash",
             "A",
             "R",
             "S",
             "T",
             "lwin",
+            # Right Side
             "__",
             "__",
             "__",
@@ -80,13 +88,15 @@ keymap = [
             "__",
         ],
         [
-            "",
-            "",
+            # Left Side
+            "CapsLock",
+            "Tab",
             "Z",
             "X",
             "C",
             "D",
             "MO(2)",
+            # Right Side
             "__",
             "__",
             "__",
@@ -96,13 +106,15 @@ keymap = [
             "__",
         ],
         [
-            "",
-            "",
-            "LGui",
+            # Left Side
+            "__",
+            "__",
+            "Minus",
+            "Equal",
             "LShift",
-            "Delete",
-            "MO(6)",
+            "__",
             "TRNS",
+            # Right Side
             "__",
             "__",
             "__",
