@@ -72,19 +72,22 @@ jobs:
             wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/$LIBSSL
           fi
           sudo dpkg -i $LIBSSL
+
       # Only install tools if the bin cache missed
-      - name: Install tools
+      - name: Install binstall
         if: steps.cache-bins.outputs.cache-hit != 'true'
         uses: cargo-bins/cargo-binstall@main
-      - name: Run binstall
+
+      - name: Install ESP tools via binstall
         if: steps.cache-bins.outputs.cache-hit != 'true'
         run: cargo binstall rmkit espflash espup -y
-      # Only run espup if the toolchain cache missed
+
+      # Only run espup if toolchain is missing
       - name: Prepare esp environment
         if: steps.cache-esp.outputs.cache-hit != 'true'
         run: espup install
+
       - name: Create firmware project
-        if: steps.check_file_exists.outputs.check_result == 'true'
         working-directory: .
         run: rmkit create --keyboard-toml-path keyboard.toml --vial-json-path vial.json --version main --target-dir rmk
       - name: Build firmware for esp32
