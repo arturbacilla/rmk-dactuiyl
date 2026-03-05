@@ -16,8 +16,8 @@ jobs:
     outputs:
       chip_name: ${{ steps.capture.outputs.chip_name }}
     steps:
-      - uses: actions/checkout@v4
       - uses: cargo-bins/cargo-binstall@main
+      - uses: actions/checkout@v4
       - uses: actions/cache@v4
         with:
           path: |
@@ -32,18 +32,26 @@ jobs:
       - name: Get chip name
         id: capture
         run: |
-          # Use env context instead of inputs
-          OUTPUT=$(rmkit get-chip --keyboard-toml-path "${{ env.KEYBOARD_TOML_PATH }}")
-          echo "Command output: $OUTPUT"
-          echo "chip_name=$OUTPUT" >> $GITHUB_OUTPUT
+          # Run rmkit command to get the chip name
+          OUTPUT=$(rmkit get-chip --keyboard-toml-path ${{ env.KEYBOARD_TOML_PATH }})
 
+          # Print the output to confirm
+          echo "Command output: $OUTPUT"
+
+          # Save the output as a GitHub Actions output variable
+          echo "chip_name=$OUTPUT" >> $GITHUB_OUTPUT
   build:
     runs-on: ubuntu-latest
     needs: get_chip_name
     if: needs.get_chip_name.outputs.chip_name != 'esp32s3'
     steps:
-      - uses: actions/checkout@v4
       - uses: cargo-bins/cargo-binstall@main
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: |
+            libssl*.deb
+          key: ${{ runner.os }}-libssl
       - name: Install libssl
         run: |
           [ ! -f $LIBSSL ] && wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/$LIBSSL
@@ -51,7 +59,8 @@ jobs:
       - name: Install rmkit, flip-link and cargo-make
         run: cargo binstall cargo-make rmkit flip-link -y
       - name: Create firmware project
-        run: rmkit create --keyboard-toml-path "${{ env.KEYBOARD_TOML_PATH }}" --vial-json-path "${{ env.VIAL_JSON_PATH }}" --version "${{ env.RMK_VERSION }}" --target-dir rmk
+        working-directory: .
+        run: rmkit create --keyboard-toml-path ${{ env.KEYBOARD_TOML_PATH }} --vial-json-path ${{ env.VIAL_JSON_PATH }} --version ${{ env.RMK_VERSION }} --target-dir rmk
       - name: Build firmware
         working-directory: ./rmk
         run: cargo build --release
@@ -63,14 +72,23 @@ jobs:
         with:
           name: firmware_uf2
           path: rmk/*.uf2
-
+      - name: Upload hex artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware_hex
+          path: rmk/*.hex
   build_esp:
     runs-on: ubuntu-latest
     needs: get_chip_name
     if: needs.get_chip_name.outputs.chip_name == 'esp32s3'
     steps:
-      - uses: actions/checkout@v4
       - uses: cargo-bins/cargo-binstall@main
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: |
+            libssl*.deb
+          key: ${{ runner.os }}-libssl
       - name: Install libssl
         run: |
           [ ! -f $LIBSSL ] && wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/$LIBSSL
@@ -80,57 +98,39 @@ jobs:
       - name: Prepare esp environment
         run: espup install
       - name: Create firmware project
-        run: rmkit create --keyboard-toml-path "${{ env.KEYBOARD_TOML_PATH }}" --vial-json-path "${{ env.VIAL_JSON_PATH }}" --version "${{ env.RMK_VERSION }}" --target-dir rmk
+        working-directory: .
+        run: rmkit create --keyboard-toml-path ${{ env.KEYBOARD_TOML_PATH }} --vial-json-path ${{ env.VIAL_JSON_PATH }} --version ${{ env.RMK_VERSION }} --target-dir rmk
       - name: Build firmware for esp32
         working-directory: ./rmk
         run: . /home/runner/export-esp.sh && cargo +esp build --release
-      
       - name: Get target arch
         id: arch
         run: |
-          CHIP="${{ needs.get_chip_name.outputs.chip_name }}"
-          if [ "$CHIP" == "esp32c3" ]; then
+          if [ "${{ needs.get_chip_name.outputs.chip_name }}" == "esp32c3" ]; then
             ARCH="riscv32imc-unknown-none-elf"
-          elif [ "$CHIP" == "esp32s3" ]; then
+          elif [ "${{ needs.get_chip_name.outputs.chip_name }}" == "esp32s3" ]; then
             ARCH="xtensa-esp32s3-none-elf"
-          elif [ "$CHIP" == "esp32c6" ]; then
+          elif [ "${{ needs.get_chip_name.outputs.chip_name }}" == "esp32c6" ]; then
             ARCH="riscv32imac-unknown-none-elf"
           else
             ARCH=""
           fi
+          # Save the arch as a GitHub Actions output variable
           echo "arch=$ARCH" >> $GITHUB_OUTPUT
-
       - name: Get project name
         id: project_name
         run: |
-          # Use env context. Note: config is in root, so we use full path
-          OUTPUT=$(rmkit get-project-name --keyboard-toml-path "${{ env.KEYBOARD_TOML_PATH }}")
+          # Run rmkit command to get the chip name
+          OUTPUT=$(rmkit get-project-name --keyboard-toml-path ${{ env.KEYBOARD_TOML_PATH }})
+
+          # Print the output to confirm
+          echo "Command output: $OUTPUT"
+
+          # Save the output as a GitHub Actions output variable
           echo "project_name=$OUTPUT" >> $GITHUB_OUTPUT
-
-      - name: Locate Binary and Validate
-        working-directory: ./rmk
-        run: |
-          echo "--- 1. Searching for binary: ${{ steps.project_name.outputs.project_name }} ---"
-          # Find file named after the project name inside the target folder
-          FOUND_PATH=$(find target -name "${{ steps.project_name.outputs.project_name }}" -type f | head -n 1)
-
-          if [ -z "$FOUND_PATH" ]; then
-            echo "::error::Binary NOT FOUND! Showing directory structure for help:"
-            ls -R target
-            exit 1
-          else
-            echo "SUCCESS: Found binary at: $FOUND_PATH"
-            echo "BINARY_PATH=$FOUND_PATH" >> $GITHUB_ENV
-          fi
-
       - name: convert firmware to bin
         working-directory: ./rmk
-        run: |
-          espflash save-image \
-            --chip ${{ needs.get_chip_name.outputs.chip_name }} \
-            ${{ env.BINARY_PATH }} \
-            --merge ./rmk.bin
-
+        run: espflash save-image --chip ${{ needs.get_chip_name.outputs.chip_name }} target/${{ steps.arch.outputs.arch }}/release/${{ steps.project_name.outputs.project_name }} --merge ./rmk.bin
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
