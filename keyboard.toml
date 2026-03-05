@@ -54,7 +54,7 @@ keymap = [
         [
             # Left Side
             "__",
-            "__",
+            "Slash",
             "Q",
             "W",
             "F",
@@ -125,6 +125,15 @@ keymap = [
         ],
     ],
 ]
+
+[storage]
+enabled = false
+
+[dependency]
+defmt_log = false
+
+[host]
+vial_enabled = true
 
 [split]
 connection = "ble"

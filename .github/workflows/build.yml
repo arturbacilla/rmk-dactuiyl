@@ -45,31 +45,44 @@ jobs:
     steps:
       - uses: cargo-bins/cargo-binstall@main
       - uses: actions/checkout@v4
-      - uses: actions/cache@v4
+      # 1. Cache the ESP Toolchain (~/export-esp.sh and ~/.rustup/toolchains/esp)
+      - name: Cache ESP Toolchain
+        id: cache-esp
+        uses: actions/cache@v4
         with:
           path: |
-            libssl*.deb
-          key: ${{ runner.os }}-libssl
+            ~/.rustup/toolchains/esp
+            ~/export-esp.sh
+            ~/.espressif
+          key: ${{ runner.os }}-esp-toolchain-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-esp-toolchain-
+      # 2. Cache Cargo Binaries (espup, espflash, rmkit)
+      - name: Cache Cargo Bins
+        id: cache-bins
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin
+          key: ${{ runner.os }}-cargo-bins
+      # Install Libssl (System level, usually fast, but kept for consistency)
       - name: Install libssl
         run: |
-          [ ! -f $LIBSSL ] && wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/$LIBSSL
-          sudo dpkg -i $LIBSSL
-      - name: Install tree
-        run: |
-          sudo apt install tree
-      - name: Install rmkit, espflash and espup
-        run: cargo binstall rmkit espflash espup -y
-      - name: Prepare esp environment
-        run: espup install
-      - name: Check if export-esp exists
-        id: check_file_exists
-        run: |
-          FILE="/home/runner/export-esp.sh"
-          if [ -f "$FILE" ]; then
-            echo "check_result=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "check_result=false" >> "$GITHUB_OUTPUT"
+          LIBSSL="libssl1.1_1.1.1f-1ubuntu2_amd64.deb"
+          if [ ! -f $LIBSSL ]; then
+            wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/$LIBSSL
           fi
+          sudo dpkg -i $LIBSSL
+      # Only install tools if the bin cache missed
+      - name: Install tools
+        if: steps.cache-bins.outputs.cache-hit != 'true'
+        uses: cargo-bins/cargo-binstall@main
+      - name: Run binstall
+        if: steps.cache-bins.outputs.cache-hit != 'true'
+        run: cargo binstall rmkit espflash espup -y
+      # Only run espup if the toolchain cache missed
+      - name: Prepare esp environment
+        if: steps.cache-esp.outputs.cache-hit != 'true'
+        run: espup install
       - name: Create firmware project
         if: steps.check_file_exists.outputs.check_result == 'true'
         working-directory: .
@@ -92,17 +105,6 @@ jobs:
           echo "arch $ARCH"
           # Save the arch as a GitHub Actions output variable
           echo "arch=$ARCH" >> $GITHUB_OUTPUT
-      - name: Get project name
-        id: project_name
-        run: |
-          # Run rmkit command to get the chip name
-          OUTPUT=$(rmkit get-project-name --keyboard-toml-path keyboard.toml)
-
-          # Print the output to confirm
-          echo "Command output: $OUTPUT"
-
-          # Save the output as a GitHub Actions output variable
-          echo "project_name=$OUTPUT" >> $GITHUB_OUTPUT
       - name: convert firmware to bin
         working-directory: ./rmk
         run: espflash save-image --chip ${{ needs.get_chip_name.outputs.chip_name }} "./target/${{ steps.arch.outputs.arch }}/release/central" --merge ./rmk-central.bin
