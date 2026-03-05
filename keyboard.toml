@@ -126,14 +126,14 @@ keymap = [
     ],
 ]
 
-[storage]
-enabled = false
+# [storage]
+# enabled = false
 
-[dependency]
-defmt_log = false
+# [dependency]
+# defmt_log = false
 
-[host]
-vial_enabled = true
+# [host]
+# vial_enabled = true
 
 [split]
 connection = "ble"
