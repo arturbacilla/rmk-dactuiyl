@@ -5,9 +5,9 @@ on:
   workflow_dispatch:
 
 env:
-  KEYBOARD_TOML_PATH: "keyboard.toml"
-  VIAL_JSON_PATH: "vial.json"
-  RMK_VERSION: "main"
+  KEYBOARD_TOML_PATH: keyboard.toml
+  VIAL_JSON_PATH: vial.json
+  RMK_VERSION: main
   LIBSSL: "libssl1.1_1.1.1f-1ubuntu2_amd64.deb"
 
 jobs:
@@ -99,7 +99,7 @@ jobs:
         run: espup install
       - name: Create firmware project
         working-directory: .
-        run: rmkit create --keyboard-toml-path ${{ env.KEYBOARD_TOML_PATH }} --vial-json-path ${{ env.VIAL_JSON_PATH }} --version ${{ env.RMK_VERSION }} --target-dir rmk
+        run: rmkit create --keyboard-toml-path "${{ env.KEYBOARD_TOML_PATH }}" --vial-json-path "${{ env.VIAL_JSON_PATH }}" --version "${{ env.RMK_VERSION }}" --target-dir rmk
       - name: Build firmware for esp32
         working-directory: ./rmk
         run: . /home/runner/export-esp.sh && cargo +esp build --release
