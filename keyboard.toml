@@ -35,8 +35,8 @@ keymap = [
         ],
         [
             # Left Side
-            "LeftBracket",
-            "RightBracket",
+            "LeftBracket",  # [
+            "RightBracket", # ]
             "Kc1",
             "Kc2",
             "Kc3",
@@ -53,8 +53,8 @@ keymap = [
         ],
         [
             # Left Side
-            "__",
-            "Slash",
+            "WM(LeftBracket, LShift)",  # {
+            "WM(RightBracket, LShift)", #  }
             "Q",
             "W",
             "F",
@@ -71,8 +71,8 @@ keymap = [
         ],
         [
             # Left Side
-            "Backslash",
-            "Slash",
+            "Backslash", # \|
+            "Slash",     # /?
             "A",
             "R",
             "S",
