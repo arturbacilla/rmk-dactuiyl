@@ -115,14 +115,14 @@ keymap = [
 ]
 
 [split]
-connection = "serial"
+connection = "ble"
 
 [split.central]
 rows = 6
 cols = 7
 row_offset = 0
 col_offset = 0
-serial = [{ instance = "UART0", tx_pin = "GPIO43", rx_pin = "GPIO44" }]
+# serial = [{ instance = "UART0", tx_pin = "GPIO43", rx_pin = "GPIO44" }]
 
 [split.central.matrix]
 #output colunas
@@ -135,7 +135,7 @@ rows = 6
 cols = 7
 row_offset = 0
 col_offset = 7
-serial = [{ instance = "UART0", tx_pin = "GPIO43", rx_pin = "GPIO44" }]
+# serial = [{ instance = "UART0", tx_pin = "GPIO43", rx_pin = "GPIO44" }]
 
 [split.peripheral.matrix]
 matrix_type = "normal"
