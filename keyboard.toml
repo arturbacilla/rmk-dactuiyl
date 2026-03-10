@@ -11,7 +11,7 @@ chip = "esp32s3"
 [layout]
 rows = 6
 cols = 14
-layers = 1
+layers = 2
 
 keymap = [
     [
@@ -25,13 +25,13 @@ keymap = [
             "F6",
             "LCtrl",
             # Right Side
-            "__",
-            "__",
-            "__",
-            "__",
-            "__",
-            "__",
-            "__",
+            "Backspace",
+            "F7",
+            "F8",
+            "F9",
+            "F10",
+            "F11",
+            "F12"
         ],
         [
             # Left Side
@@ -43,13 +43,13 @@ keymap = [
             "Kc4",
             "LAlt",
             # Right Side
-            "__",
-            "__",
-            "__",
-            "__",
-            "__",
-            "__",
-            "__",
+            "Space",
+            "Kc5",
+            "Kc6",
+            "Kc7",
+            "Kc8",
+            "Kc9",
+            "Kc0"
         ],
         [
             # Left Side
@@ -61,13 +61,13 @@ keymap = [
             "P",
             "Tab",
             # Right Side
-            "__",
-            "__",
-            "__",
-            "__",
-            "__",
-            "__",
-            "__",
+            "Escape",
+            "U",
+            "L",
+            "J",
+            "G",
+            "__",     # Ç
+            "Y"
         ],
         [
             # Left Side
@@ -79,13 +79,13 @@ keymap = [
             "T",
             "lwin",
             # Right Side
-            "__",
-            "__",
-            "__",
-            "__",
-            "__",
-            "__",
-            "__",
+            "Delete",
+            "M",
+            "N",
+            "E",
+            "I",
+            "__",     # ~^
+            "K"
         ],
         [
             # Left Side
@@ -97,13 +97,13 @@ keymap = [
             "D",
             "MO(2)",
             # Right Side
-            "__",
-            "__",
-            "__",
-            "__",
-            "__",
-            "__",
-            "__",
+            "PrintScreen",
+            "V",
+            "H",
+            "B",
+            "O",
+            "Semicolon",
+            "__"
         ],
         [
             # Left Side
@@ -117,13 +117,124 @@ keymap = [
             # Right Side
             "__",
             "__",
+            "Enter",
+            "Comma",
+            "Dot",
             "__",
-            "__",
-            "__",
-            "__",
-            "__",
-        ],
+            "__"
+        ]
     ],
+    [
+        [
+            # Left Side
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5",
+            "F6",
+            "LCtrl",
+            # Right Side
+            "Backspace",
+            "F7",
+            "F8",
+            "F9",
+            "F10",
+            "F11",
+            "F12"
+        ],
+        [
+            # Left Side
+            "LeftBracket",  # [
+            "RightBracket", # ]
+            "Kc1",
+            "Kc2",
+            "Kc3",
+            "Kc4",
+            "LAlt",
+            # Right Side
+            "Space",
+            "Kc5",
+            "Kc6",
+            "Kc7",
+            "Kc8",
+            "Kc9",
+            "Kc0"
+        ],
+        [
+            # Left Side
+            "WM(LeftBracket, LShift)",  # {
+            "WM(RightBracket, LShift)", #  }
+            "Q",
+            "W",
+            "E",
+            "R",
+            "Tab",
+            # Right Side
+            "Escape",
+            "T",
+            "Y",
+            "U",
+            "I",
+            "O",
+            "P"
+        ],
+        [
+            # Left Side
+            "Backslash", # \|
+            "Slash",     # /?
+            "A",
+            "S",
+            "D",
+            "F",
+            "lwin",
+            # Right Side
+            "Delete",
+            "G",
+            "H",
+            "J",
+            "K",
+            "L",
+            "__"      #Ç
+        ],
+        [
+            # Left Side
+            "CapsLock",
+            "Tab",
+            "Z",
+            "X",
+            "C",
+            "V",
+            "MO(2)",
+            # Right Side
+            "PrintScreen",
+            "B",
+            "N",
+            "M",
+            "O",
+            "Semicolon",
+            "__"
+        ],
+        [
+            # Left Side
+            "__",
+            "__",
+            "Minus",
+            "Equal",
+            "LShift",
+            "__",
+            "TRNS",
+            # Right Side
+            "__",
+            "__",
+            "Enter",
+            "Comma",
+            "Dot",
+            "__",
+            "__"
+        ]
+    ]
+
 ]
 
 # [storage]
@@ -160,5 +271,5 @@ col_offset = 7
 
 [split.peripheral.matrix]
 matrix_type = "normal"
-row_pins = ["GPIO1", "GPIO2", "GPIO3", "GPIO4", "GPIO5", "GPIO6"]
-col_pins = ["GPIO13", "GPIO12", "GPIO11", "GPIO10", "GPIO9", "GPIO8", "GPIO7"]
+row_pins = ["GPIO6", "GPIO5", "GPIO4", "GPIO3", "GPIO2", "GPIO1"]
+col_pins = ["GPIO7", "GPIO8", "GPIO9", "GPIO10", "GPIO11", "GPIO12", "GPIO13"]
