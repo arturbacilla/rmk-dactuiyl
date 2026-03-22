@@ -109,9 +109,12 @@ jobs:
           echo "arch $ARCH"
           # Save the arch as a GitHub Actions output variable
           echo "arch=$ARCH" >> $GITHUB_OUTPUT
-      - name: convert firmware to bin
+      - name: convert central-firmware to bin
         working-directory: ./rmk
         run: espflash save-image --chip ${{ needs.get_chip_name.outputs.chip_name }} "./target/${{ steps.arch.outputs.arch }}/release/central" --merge ./rmk-central.bin
+      - name: convert peripheral-firmware to bin
+        working-directory: ./rmk
+        run: espflash save-image --chip ${{ needs.get_chip_name.outputs.chip_name }} "./target/${{ steps.arch.outputs.arch }}/release/peripheral" --merge ./rmk-peripheral.bin
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
