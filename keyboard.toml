@@ -6,6 +6,7 @@ product_id = 0xCAD1
 manufacturer = "Artur Bacilla"
 serial_number = "vial:f64c2b3c"
 chip = "esp32s3"
+usb_enable = false
 
 
 [layout]
@@ -237,24 +238,32 @@ keymap = [
 
 ]
 
-# [storage]
-# enabled = false
+[rmk]
+split_peripherals_num = 1
+ble_profiles_num = 3
 
-# [dependency]
-# defmt_log = false
+[storage]
+enabled = false
 
-# [host]
-# vial_enabled = true
+[dependency]
+defmt_log = false
+
+[host]
+vial_enabled = true
 
 [split]
 connection = "ble"
+
+[ble]
+enabled = true
+
 
 [split.central]
 rows = 6
 cols = 7
 row_offset = 0
 col_offset = 0
-# serial = [{ instance = "UART0", tx_pin = "GPIO43", rx_pin = "GPIO44" }]
+ble_addr = [0x18, 0xe2, 0x21, 0x80, 0xc0, 0xc7]
 
 [split.central.matrix]
 #output colunas
@@ -267,7 +276,7 @@ rows = 6
 cols = 7
 row_offset = 0
 col_offset = 7
-# serial = [{ instance = "UART0", tx_pin = "GPIO43", rx_pin = "GPIO44" }]
+ble_addr = [0x7e, 0xfe, 0x73, 0x9e, 0x66, 0xe3]
 
 [split.peripheral.matrix]
 matrix_type = "normal"
