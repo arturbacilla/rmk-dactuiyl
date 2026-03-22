@@ -242,9 +242,6 @@ keymap = [
 split_peripherals_num = 1
 ble_profiles_num = 3
 
-[storage]
-enabled = false
-
 [dependency]
 defmt_log = false
 
@@ -256,7 +253,6 @@ connection = "ble"
 
 [ble]
 enabled = true
-
 
 [split.central]
 rows = 6
