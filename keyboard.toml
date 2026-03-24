@@ -58,7 +58,7 @@ keymap = [
             "W",
             "F",
             "P",
-            "Tab",
+            "Space",
             # Right Side
             "Escape",
             "U",
@@ -70,20 +70,20 @@ keymap = [
         ],
         [
             # Left Side
-            "Backslash", # \|
-            "Slash",     # /?
+            "TD(0)", # ''
+            "Slash", # /?
             "A",
             "R",
             "S",
             "T",
-            "lwin",
+            "MO(1)",
             # Right Side
             "Delete",
             "M",
             "N",
             "E",
             "I",
-            "__",     # ~^
+            "TD(1)",  # ~^
             "K"
         ],
         [
@@ -94,7 +94,7 @@ keymap = [
             "X",
             "C",
             "D",
-            "MO(2)",
+            "LGui",
             # Right Side
             "PrintScreen",
             "V",
@@ -102,73 +102,73 @@ keymap = [
             "B",
             "O",
             "Semicolon",
-            "__"
+            "TO(0)"
         ],
         [
             # Left Side
-            "__",
-            "__",
-            "Minus",
+            "No",
+            "No",
+            "TD(4)",
             "Equal",
             "LShift",
-            "__",
-            "TRNS",
+            "No",
+            "No",
             # Right Side
-            "__",
-            "__",
+            "No",
+            "No",
             "Enter",
-            "Comma",
-            "Dot",
-            "__",
-            "__"
+            "TD(2)",
+            "TD(3)",
+            "No",
+            "No"
         ]
     ],
     [
         [
             # Left Side
-            "F1",
-            "F2",
-            "F3",
-            "F4",
-            "F5",
-            "F6",
-            "LCtrl",
-            # Right Side
-            "Backspace",
-            "F7",
-            "F8",
-            "F9",
-            "F10",
-            "F11",
-            "F12"
-        ],
-        [
-            # Left Side
-            "LeftBracket",  # [
-            "RightBracket", # ]
-            "Kc1",
-            "Kc2",
-            "Kc3",
-            "Kc4",
-            "LAlt",
-            # Right Side
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
             "Space",
-            "Kc5",
-            "Kc6",
-            "Kc7",
-            "Kc8",
-            "Kc9",
-            "Kc0"
+            # Right Side
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__",
+            "__"
         ],
         [
             # Left Side
-            "WM(LeftBracket, LShift)",  # {
-            "WM(RightBracket, LShift)", #  }
+            "__",     # [
+            "__",     # ]
+            "Kp1",
+            "Kp2",
+            "Kp3",
+            "Kp4",
+            "LShift",
+            # Right Side
+            "__",
+            "Kp5",
+            "Kp6",
+            "Kp7",
+            "Kp8",
+            "Kp9",
+            "Kp0"
+        ],
+        [
+            # Left Side
+            "__",   # {
+            "__",   #  }
             "Q",
             "W",
             "E",
             "R",
-            "Tab",
+            "LAlt",
             # Right Side
             "Escape",
             "T",
@@ -180,13 +180,13 @@ keymap = [
         ],
         [
             # Left Side
-            "Backslash", # \|
-            "Slash",     # /?
+            "__",
+            "No",
             "A",
             "S",
             "D",
             "F",
-            "lwin",
+            "__",
             # Right Side
             "Delete",
             "G",
@@ -198,39 +198,39 @@ keymap = [
         ],
         [
             # Left Side
-            "CapsLock",
+            "Escape",
             "Tab",
             "Z",
             "X",
             "C",
             "V",
-            "MO(2)",
+            "LGui",
             # Right Side
             "PrintScreen",
             "B",
             "N",
             "M",
-            "O",
-            "Semicolon",
-            "__"
+            "__",
+            "__",
+            "TO(1)"
         ],
         [
             # Left Side
+            "No",
+            "No",
             "__",
             "__",
-            "Minus",
-            "Equal",
-            "LShift",
-            "__",
-            "TRNS",
+            "LCtrl",
+            "No",
+            "No",
             # Right Side
+            "No",
+            "No",
             "__",
             "__",
-            "Enter",
-            "Comma",
-            "Dot",
             "__",
-            "__"
+            "No",
+            "No"
         ]
     ]
 
@@ -257,6 +257,7 @@ ble_addr = [0x18, 0xe2, 0x21, 0x80, 0xc0, 0xc7]
 matrix_type = "normal"
 row_pins = ["GPIO1", "GPIO2", "GPIO3", "GPIO4", "GPIO5", "GPIO6"]
 col_pins = ["GPIO13", "GPIO12", "GPIO11", "GPIO10", "GPIO9", "GPIO8", "GPIO7"]
+debouncer = "fast"
 
 [[split.peripheral]]
 rows = 6
@@ -269,3 +270,4 @@ ble_addr = [0x7e, 0xfe, 0x73, 0x9e, 0x66, 0xe3]
 matrix_type = "normal"
 row_pins = ["GPIO6", "GPIO5", "GPIO4", "GPIO3", "GPIO2", "GPIO1"]
 col_pins = ["GPIO7", "GPIO8", "GPIO9", "GPIO10", "GPIO11", "GPIO12", "GPIO13"]
+debouncer = "fast"
