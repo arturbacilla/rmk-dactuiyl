@@ -34,8 +34,8 @@ keymap = [
         ],
         [
             # Left Side
-            "LeftBracket",  # [
-            "RightBracket", # ]
+            "RightBracket", # [
+            "NonusHash",    # ]
             "Kc1",
             "Kc2",
             "Kc3",
@@ -52,8 +52,8 @@ keymap = [
         ],
         [
             # Left Side
-            "WM(LeftBracket, LShift)",  # {
-            "WM(RightBracket, LShift)", #  }
+            "WM(RightBracket, LShift)", # {
+            "WM(NonusHash, LShift)",    #  }
             "Q",
             "W",
             "F",
@@ -70,8 +70,8 @@ keymap = [
         ],
         [
             # Left Side
-            "TD(0)", # ''
-            "Slash", # /?
+            "TD(0)",          # ''
+            "International1", # /?
             "A",
             "R",
             "S",
@@ -181,7 +181,7 @@ keymap = [
         [
             # Left Side
             "__",
-            "No",
+            "NonusBackslash",
             "A",
             "S",
             "D",
@@ -235,6 +235,10 @@ keymap = [
     ]
 
 ]
+
+[host]
+vial_enabled = true
+unlock_keys = [[2, 8], [2, 9], [3, 9], [4, 11], [3, 13]]
 
 [dependency]
 defmt_log = false
