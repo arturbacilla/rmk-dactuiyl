@@ -238,7 +238,7 @@ keymap = [
 
 [host]
 vial_enabled = true
-unlock_keys = [[2, 8], [2, 9], [3, 9], [4, 11], [3, 13]]
+unlock_keys = [[2, 8], [2, 9], [3, 9], [4, 11], [2, 13]]
 
 [dependency]
 defmt_log = false
@@ -248,6 +248,12 @@ connection = "ble"
 
 [ble]
 enabled = true
+
+[rmk]
+debounce_time = 40
+combo_max_num = 4
+fork_max_num = 4
+morse_max_num = 16
 
 [split.central]
 rows = 6
@@ -262,7 +268,6 @@ matrix_type = "normal"
 row_pins = ["GPIO1", "GPIO2", "GPIO3", "GPIO4", "GPIO5", "GPIO6"]
 col_pins = ["GPIO13", "GPIO12", "GPIO11", "GPIO10", "GPIO9", "GPIO8", "GPIO7"]
 debounce = "fast"
-debounce_time = 60
 
 [[split.peripheral]]
 rows = 6
@@ -275,5 +280,4 @@ ble_addr = [0x7e, 0xfe, 0x73, 0x9e, 0x66, 0xe3]
 matrix_type = "normal"
 row_pins = ["GPIO6", "GPIO5", "GPIO4", "GPIO3", "GPIO2", "GPIO1"]
 col_pins = ["GPIO7", "GPIO8", "GPIO9", "GPIO10", "GPIO11", "GPIO12", "GPIO13"]
-debounce_time = 60
 debounce = "fast"
